@@ -1,0 +1,33 @@
+.blog-header-logo {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 38px;
+}
+
+.blog-footer {
+    margin: 100px 0px 0px 70px;
+}
+
+.about h1 {
+    margin: 100px 0px 0px 70px;
+}
+
+.body {
+    padding: 25px 100px 50px 275px
+}
+
+.form-input {
+    width: 300px;
+    font-size: 16px;
+}
+
+.form-label {
+    display: inline-block;
+    min-width: 150px;
+    vertical-align: top;
+}
+
+.form-error ul {
+    list-style: none;
+    padding: 0;
+    color: #CC0000;
+}

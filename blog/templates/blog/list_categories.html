@@ -1,0 +1,24 @@
+{% extends 'blog/base.html' %}
+
+{% block head %}
+    <title>{{ title }}</title>
+{% endblock %}
+
+
+{% block body %}
+<div class="body">
+  <div class="row g-5">
+    <div class="col-md-8">
+      <h3 class="pb-4 mb-4 fst-italic border-bottom"></h3>
+      <article class="blog-post">
+        {% for p in posts %}
+            <h2 class="blog-post-title">{{ p.title }}</h2>
+            <p>{{ p.content|linebreaks|truncatewords:40 }}</p>
+            <p class="link-read-post"><a href="{{ p.get_absolute_url }}">Читать пост</a></p>
+            <p class="blog-post-meta">Опубликовано: {{p.time_update|date:"d-m-Y H:i:s"}}, Автор: <a href="#">Mark</a></p>
+            <hr>
+        {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}
