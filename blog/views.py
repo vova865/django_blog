@@ -1,5 +1,7 @@
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, ListView, DetailView
 
 from .forms import AddPostForm
 from .models import Article, Category
@@ -27,20 +29,15 @@ def about(request):
     return render(request, 'blog/about.html', context=context)
 
 
-def add_page(request):
-    if request.method == 'POST':
-        form = AddPostForm(request.POST)
-        if form.is_valid():
-            # print(form.cleaned_data)
-            form.save()
-            return redirect('home_page')
-    else:
-        form = AddPostForm()
-    context = {
-        'title': 'Добавление статьи',
-        'form': form,
-    }
-    return render(request, 'blog/add_page.html', context=context)
+class AddPage(CreateView):
+    form_class = AddPostForm
+    template_name = 'blog/add_page.html'
+    success_url = reverse_lazy('home_page')
+
+    def get_context_data(self, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Добавление статьи'
+        return context
 
 
 def login(request):
