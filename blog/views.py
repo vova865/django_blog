@@ -4,18 +4,39 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DetailView
 
 from .forms import AddPostForm
-from .models import Article, Category
+from .models import Article
 
 
-def home_page(request):
-    popular_post = Article.objects.get(pk=1)
-    context = {
-        'popular_post': popular_post,
-        'title': 'Главная страница',
-        'posts': Article.objects.all(),
-        'cats': Category.objects.all()
-    }
-    return render(request, 'blog/home_page.html', context=context)
+class HomePage(DetailView):
+    model = Article
+    template_name = 'blog/home_page.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Главная страница'
+        return context
+
+
+# def home_page(request):
+#     popular_post = Article.objects.get(pk=1)
+#     context = {
+#         'popular_post': popular_post,
+#         'title': 'Главная страница',
+#         'posts': Article.objects.all(),
+#         'cats': Category.objects.all()
+#     }
+#     return render(request, 'blog/home_page.html', context=context)
+
+class ShowPost(DetailView):
+    model = Article
+    template_name = 'blog/post.html'
+    slug_url_kwarg = 'post_slug'
+    context_object_name = 'content'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Пост'
+        return context
 
 
 def pageNotFound(request, exception):
@@ -46,16 +67,6 @@ def login(request):
 
 def search(request):
     return HttpResponse('<h1>Страница поиска</h1>')
-
-
-def show_post(request, post_slug):
-    context = {
-        'title': 'Пост',
-        'post_slug': post_slug,
-        'post': get_object_or_404(Article, slug=post_slug),
-        'content': Article.objects.get(slug=post_slug),
-    }
-    return render(request, 'blog/post.html', context=context)
 
 
 def show_category(request, category_id):
