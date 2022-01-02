@@ -21,13 +21,14 @@ class HomePage(ListView):
 
 class ShowCategory(ListView):
     model = Article
-    template_name = 'blog/list_categories'
+    template_name = 'blog/list_categories.html'
     context_object_name = 'posts'
     allow_empty = False
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Категория - ' + str(context['posts'][0].category)
+        return context
 
     def get_queryset(self):
         return Article.objects.filter(category__slug=self.kwargs['category_slug'])
