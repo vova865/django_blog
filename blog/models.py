@@ -10,6 +10,8 @@ class Article(models.Model):
     time_update = models.DateTimeField(auto_now=True)
     category = models.ForeignKey('Category', on_delete=models.PROTECT, verbose_name="Категории")
     writer = models.ForeignKey('Writer', on_delete=models.PROTECT, null=True)
+    # Также нужно добавить кол-во просмотров, поле - views
+    #     Article.objects.filter(slug='...').update(views=F('views')+1)
 
     def __str__(self):
         return self.title

@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import AddPostForm
 from .models import Article, Category
@@ -57,10 +58,12 @@ def about(request):
     return render(request, 'blog/about.html', context=context)
 
 
-class AddPage(CreateView):
+class AddPage(LoginRequiredMixin, CreateView):
     form_class = AddPostForm
     template_name = 'blog/add_page.html'
     success_url = reverse_lazy('home_page')
+    login_url = reverse_lazy('login')
+    # raise_exception = True
 
     def get_context_data(self, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
