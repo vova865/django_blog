@@ -63,7 +63,7 @@ class AddPage(LoginRequiredMixin, CreateView):
     template_name = 'blog/add_page.html'
     success_url = reverse_lazy('home_page')
     login_url = reverse_lazy('login')
-    # raise_exception = True
+    raise_exception = True
 
     def get_context_data(self, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
