@@ -22,7 +22,7 @@ class Article(models.Model):
     class Meta:
         verbose_name = 'статью'
         verbose_name_plural = 'Статьи'
-        ordering = ['time_create', 'title']
+        ordering = ['id']
 
 
 class Writer(models.Model):
