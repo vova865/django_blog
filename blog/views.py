@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .forms import AddPostForm
+from .forms import AddPostForm, RegisterUserForm
 from .models import Article, Category
 
 
@@ -72,7 +72,18 @@ class AddPage(LoginRequiredMixin, CreateView):
 
 
 def login(request):
-    return HttpResponse('<h1>Авторизация</h1>')
+    return HttpResponse('<h1>Войти</h1>')
+
+
+class RegisterUser(CreateView):
+    form_class = RegisterUserForm
+    template_name = 'blog/register.html'
+    success_url = reverse_lazy('home_page')
+
+    def get_context_data(self, objects_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Регистрация'
+        return context
 
 
 def search(request):
