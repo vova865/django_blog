@@ -21,6 +21,7 @@ class HomePage(ListView):
 
 
 class ShowCategory(ListView):
+
     paginate_by = 3
     model = Article
     template_name = 'blog/list_categories.html'
