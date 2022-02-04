@@ -11,6 +11,7 @@ from .models import Article, Category
 
 
 class HomePage(ListView):
+    """Главная страница сайта."""
     model = Article
     template_name = 'blog/home_page.html'
 
@@ -22,10 +23,11 @@ class HomePage(ListView):
         return context
 
 
-class ShowCategory(ListView):
+class ShowArticles(ListView):
+    """Показывает список статей по категориям."""
     paginate_by = 3
     model = Article
-    template_name = 'blog/list_categories.html'
+    template_name = 'blog/list_articles.html'
     context_object_name = 'posts'
     allow_empty = False
 
@@ -39,6 +41,7 @@ class ShowCategory(ListView):
 
 
 class ShowPost(DetailView):
+    """Показывает пост."""
     model = Article
     template_name = 'blog/post.html'
     slug_url_kwarg = 'post_slug'
@@ -62,6 +65,7 @@ def about(request):
 
 
 class AddPage(LoginRequiredMixin, CreateView):
+    """Добавление новой записи."""
     form_class = AddPostForm
     template_name = 'blog/add_page.html'
     success_url = reverse_lazy('home_page')
@@ -74,6 +78,7 @@ class AddPage(LoginRequiredMixin, CreateView):
 
 
 class RegisterUser(CreateView):
+    """Регистрация пользователя."""
     form_class = RegisterUserForm
     template_name = 'blog/register.html'
     success_url = reverse_lazy('home_page')
@@ -90,6 +95,7 @@ class RegisterUser(CreateView):
 
 
 class LoginUser(LoginView):
+    """Вход пользователя."""
     form_class = LoginUserForm
     template_name = 'blog/login.html'
 

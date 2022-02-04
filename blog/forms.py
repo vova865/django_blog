@@ -7,6 +7,7 @@ from .models import Article
 
 
 class AddPostForm(forms.ModelForm):
+    """Форма добавления поста."""
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['category'].empty_label = "Категория не выбрана"
@@ -29,6 +30,7 @@ class AddPostForm(forms.ModelForm):
 
 
 class RegisterUserForm(UserCreationForm):
+    """Форма регистрация пользователя."""
     username = forms.CharField(label='Логин', widget=forms.TextInput(attrs={'class': 'form-input'}))
     email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={'class': 'forms-input'}))
     password1 = forms.CharField(label='Пароль', widget=forms.TextInput(attrs={'class': 'form-input'}))
