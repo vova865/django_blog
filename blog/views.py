@@ -1,10 +1,12 @@
+from django.contrib.auth import logout, login
+from django.contrib.auth.views import LoginView
 from django.http import HttpResponse, HttpResponseNotFound
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .forms import AddPostForm, RegisterUserForm
+from .forms import AddPostForm, RegisterUserForm, LoginUserForm
 from .models import Article, Category
 
 
@@ -71,10 +73,6 @@ class AddPage(LoginRequiredMixin, CreateView):
         return context
 
 
-def login(request):
-    return HttpResponse('<h1>Войти</h1>')
-
-
 class RegisterUser(CreateView):
     form_class = RegisterUserForm
     template_name = 'blog/register.html'
@@ -84,6 +82,29 @@ class RegisterUser(CreateView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Регистрация'
         return context
+
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('home_page')
+
+
+class LoginUser(LoginView):
+    form_class = LoginUserForm
+    template_name = 'blog/login.html'
+
+    def get_context_data(self, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Авторизация'
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('home_page')
+
+
+def logout_user(request):
+    logout(request)
+    return redirect('home_page')
 
 
 def search(request):
