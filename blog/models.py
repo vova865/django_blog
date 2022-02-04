@@ -3,6 +3,7 @@ from django.urls import reverse
 
 
 class Article(models.Model):
+    """Статья."""
     title = models.CharField(max_length=100, verbose_name="Заголовок")
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")
     content = models.TextField(blank=True, verbose_name="Контент")
@@ -26,6 +27,7 @@ class Article(models.Model):
 
 
 class Writer(models.Model):
+    """Писатель."""
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     sex = models.CharField(max_length=1, null=True)
@@ -45,6 +47,7 @@ class Writer(models.Model):
 
 
 class Category(models.Model):
+    """Категория."""
     name = models.CharField(max_length=100, db_index=True)
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")
 

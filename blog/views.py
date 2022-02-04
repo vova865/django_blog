@@ -65,7 +65,7 @@ def about(request):
 
 
 class AddPage(LoginRequiredMixin, CreateView):
-    """Добавление новой записи."""
+    """Добавление новой статьи."""
     form_class = AddPostForm
     template_name = 'blog/add_page.html'
     success_url = reverse_lazy('home_page')
